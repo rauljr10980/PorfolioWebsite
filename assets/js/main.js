@@ -272,57 +272,162 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("Slideshow script loaded.");
+
+    // Array of images for the slideshow
     const images = [
         "images/pic03.jpg",
         "images/2.jpg",
-        // ... your full images array here
+        "images/3.jpg",
+        "images/4.jpg",
+        "images/5.jpg",
+        "images/6.jpg",
+        "images/7.jpg",
+        "images/8.jpg",
+        "images/9.jpg",
+        "images/10.jpg",
+        "images/11.jpg",
+        "images/12.jpg",
+        "images/13.jpg",
+        "images/14.jpg",
+        "images/15.jpg",
+        "images/16.jpg",
+        "images/17.jpg",
+        "images/18.jpg",
+        "images/19.jpg",
+        "images/20.jpg",
+        "images/21.jpg",
+        "images/22.jpg",
+        "images/23.jpg",
+        "images/24.jpg",
+        "images/25.jpg",
+        "images/26.jpg",
+        "images/27.jpg",
+        "images/28.jpg",
+        "images/29.jpg",
+        "images/30.jpg",
+        "images/31.jpg",
+        "images/32.jpg",
+        "images/33.jpg",
+        "images/34.jpg",
+        "images/35.jpg",
+        "images/36.jpg"
     ];
-    
+
     let currentIndex = 0;
     const slideshowImage = document.getElementById("slideshow-image");
-    
-    // Preload images
+
+    if (!slideshowImage) {
+        console.error("Slideshow image element not found!");
+        return; // Prevent further execution if element is missing
+    }
+
+    // Preload images for smoother transitions
     function preloadImages() {
         images.forEach((src) => {
             const img = new Image();
             img.src = src;
         });
     }
-    
-    // Update slide
+
+    // Update the slide
     function updateSlide() {
         slideshowImage.src = images[currentIndex];
+        console.log(`Current slide: ${images[currentIndex]}`); // Debugging
     }
-    
-    // Navigation functions
-    function nextSlide(e) {
-        e.stopPropagation();
+
+    // Next slide
+    function nextSlide() {
         currentIndex = (currentIndex + 1) % images.length;
         updateSlide();
     }
-    
-    function prevSlide(e) {
-        e.stopPropagation();
+
+    // Previous slide
+    function prevSlide() {
         currentIndex = (currentIndex - 1 + images.length) % images.length;
         updateSlide();
     }
-    
-    // Event listeners
-    const nextButton = document.querySelector(".next");
-    const prevButton = document.querySelector(".prev");
-    
-    if (nextButton && prevButton) {
-        nextButton.addEventListener("click", nextSlide);
-        prevButton.addEventListener("click", prevSlide);
-        
-        // Keyboard navigation
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowRight") nextSlide(e);
-            if (e.key === "ArrowLeft") prevSlide(e);
-        });
+
+    // Attach event listeners to buttons after the page loads
+    document.querySelector(".next").addEventListener("click", nextSlide);
+    document.querySelector(".prev").addEventListener("click", prevSlide);
+
+    // Initialize the slideshow
+    preloadImages(); // Preload images for better performance
+    updateSlide(); // Show the first slide
+});
+
+
+
+
+
+document.getElementById("slideshow-image").src = "images/2.jpg";
+
+document.addEventListener("DOMContentLoaded", function () {
+    let slideshowImage = document.getElementById("slideshow-image");
+    slideshowImage.src = "images/pic1.jpg"; // Set an initial image
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let financeSlideshowImage = document.getElementById("finance-slideshow-image");
+    let financePrevButton = document.getElementById("finance-prev");
+    let financeNextButton = document.getElementById("finance-next");
+
+    let financeImages = ["images/pic04.jpg", "images/1.jpg"];
+    let financeIndex = 0; // Start with pic04.jpg
+
+    // Function to update the slideshow image
+    function updateFinanceSlide() {
+        financeSlideshowImage.src = financeImages[financeIndex];
     }
-    
-    // Initialize
-    preloadImages();
-    updateSlide();
+
+    // Function for Next Button
+    function nextFinanceSlide() {
+        financeIndex++;
+        if (financeIndex >= financeImages.length) {
+            financeIndex = 0; // Loop back to first image
+        }
+        updateFinanceSlide();
+    }
+
+    // Function for Previous Button
+    function prevFinanceSlide() {
+        financeIndex--;
+        if (financeIndex < 0) {
+            financeIndex = financeImages.length - 1; // Loop to last image
+        }
+        updateFinanceSlide();
+    }
+
+    // Auto-slide every 3 seconds
+    let financeAutoSlide = setInterval(nextFinanceSlide, 3000);
+
+    // Event Listeners for Buttons
+    financePrevButton.addEventListener("click", function () {
+        clearInterval(financeAutoSlide); // Stop auto-slideshow on manual change
+        prevFinanceSlide();
+        financeAutoSlide = setInterval(nextFinanceSlide, 3000); // Restart auto-slide
+    });
+
+    financeNextButton.addEventListener("click", function () {
+        clearInterval(financeAutoSlide);
+        nextFinanceSlide();
+        financeAutoSlide = setInterval(nextFinanceSlide, 3000);
+    });
+
+    // Set initial image
+    updateFinanceSlide();
 });
