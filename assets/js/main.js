@@ -268,104 +268,50 @@
 
 
 
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Slideshow script loaded.");
+	window.addEventListener("resize", function () {
+		updateSlideshow();
+	});
+	
+    let images = [];
+    let totalImages = 36;  // Number of images in the Slideshow folder
 
-    // Array of images for the slideshow
-    const images = [
-        "images/pic03.jpg",
-        "images/2.jpg",
-        "images/3.jpg",
-        "images/4.jpg",
-        "images/5.jpg",
-        "images/6.jpg",
-        "images/7.jpg",
-        "images/8.jpg",
-        "images/9.jpg",
-        "images/10.jpg",
-        "images/11.jpg",
-        "images/12.jpg",
-        "images/13.jpg",
-        "images/14.jpg",
-        "images/15.jpg",
-        "images/16.jpg",
-        "images/17.jpg",
-        "images/18.jpg",
-        "images/19.jpg",
-        "images/20.jpg",
-        "images/21.jpg",
-        "images/22.jpg",
-        "images/23.jpg",
-        "images/24.jpg",
-        "images/25.jpg",
-        "images/26.jpg",
-        "images/27.jpg",
-        "images/28.jpg",
-        "images/29.jpg",
-        "images/30.jpg",
-        "images/31.jpg",
-        "images/32.jpg",
-        "images/33.jpg",
-        "images/34.jpg",
-        "images/35.jpg",
-        "images/36.jpg"
-    ];
-
-    let currentIndex = 0;
-    const slideshowImage = document.getElementById("slideshow-image");
-
-    if (!slideshowImage) {
-        console.error("Slideshow image element not found!");
-        return; // Prevent further execution if element is missing
+    // Generate file names automatically (1.JPG to 36.JPG)
+    for (let i = 1; i <= totalImages; i++) {
+        images.push(`Slideshow/${i}.JPG`);
     }
 
-    // Preload images for smoother transitions
-    function preloadImages() {
-        images.forEach((src) => {
-            const img = new Image();
-            img.src = src;
-        });
-    }
-
-    // Update the slide
-    function updateSlide() {
-        slideshowImage.src = images[currentIndex];
-        console.log(`Current slide: ${images[currentIndex]}`); // Debugging
-    }
-
-    // Next slide
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateSlide();
-    }
-
-    // Previous slide
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateSlide();
-    }
-
-    // Attach event listeners to buttons after the page loads
-    document.querySelector(".next").addEventListener("click", nextSlide);
-    document.querySelector(".prev").addEventListener("click", prevSlide);
-
-    // Initialize the slideshow
-    preloadImages(); // Preload images for better performance
-    updateSlide(); // Show the first slide
-});
-
-
-
-
-
-document.getElementById("slideshow-image").src = "images/2.jpg";
-
-document.addEventListener("DOMContentLoaded", function () {
+    let currentImageIndex = 0;
     let slideshowImage = document.getElementById("slideshow-image");
-    slideshowImage.src = "images/pic1.jpg"; // Set an initial image
+
+    function updateSlideshow() {
+        if (slideshowImage) {
+            slideshowImage.src = images[currentImageIndex];
+        } else {
+            console.error("Slideshow image element not found!");
+        }
+    }
+
+    document.getElementById("next").addEventListener("click", function () {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        updateSlideshow();
+    });
+
+    document.getElementById("prev").addEventListener("click", function () {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        updateSlideshow();
+    });
+
+    // Initialize first image
+    updateSlideshow();
+});
+
+
+
+
+console.log(document.getElementById("slideshow-image").src);
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("slideshow-image").src = "slideshow/1.JPG"; // Set first image
 });
 
 
@@ -377,57 +323,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    let financeSlideshowImage = document.getElementById("finance-slideshow-image");
-    let financePrevButton = document.getElementById("finance-prev");
-    let financeNextButton = document.getElementById("finance-next");
+    let currentImageIndex = 1;
+    const totalImages = 36;
+    const imageElement = document.getElementById("slideshow-image");
 
-    let financeImages = ["images/pic04.jpg", "images/1.jpg"];
-    let financeIndex = 0; // Start with pic04.jpg
-
-    // Function to update the slideshow image
-    function updateFinanceSlide() {
-        financeSlideshowImage.src = financeImages[financeIndex];
+    function updateSlideshow() {
+        imageElement.src = `Slideshow/${currentImageIndex}.JPG`;
     }
 
-    // Function for Next Button
-    function nextFinanceSlide() {
-        financeIndex++;
-        if (financeIndex >= financeImages.length) {
-            financeIndex = 0; // Loop back to first image
-        }
-        updateFinanceSlide();
-    }
-
-    // Function for Previous Button
-    function prevFinanceSlide() {
-        financeIndex--;
-        if (financeIndex < 0) {
-            financeIndex = financeImages.length - 1; // Loop to last image
-        }
-        updateFinanceSlide();
-    }
-
-    // Auto-slide every 3 seconds
-    let financeAutoSlide = setInterval(nextFinanceSlide, 3000);
-
-    // Event Listeners for Buttons
-    financePrevButton.addEventListener("click", function () {
-        clearInterval(financeAutoSlide); // Stop auto-slideshow on manual change
-        prevFinanceSlide();
-        financeAutoSlide = setInterval(nextFinanceSlide, 3000); // Restart auto-slide
+    document.getElementById("next").addEventListener("click", function () {
+        currentImageIndex = currentImageIndex < totalImages ? currentImageIndex + 1 : 1;
+        updateSlideshow();
     });
 
-    financeNextButton.addEventListener("click", function () {
-        clearInterval(financeAutoSlide);
-        nextFinanceSlide();
-        financeAutoSlide = setInterval(nextFinanceSlide, 3000);
+    document.getElementById("prev").addEventListener("click", function () {
+        currentImageIndex = currentImageIndex > 1 ? currentImageIndex - 1 : totalImages;
+        updateSlideshow();
     });
 
-    // Set initial image
-    updateFinanceSlide();
+    updateSlideshow(); // Load first image
 });

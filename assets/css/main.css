@@ -4206,55 +4206,7 @@ input, select, textarea {
     align-items: center;
     justify-content: center;
     position: relative;
-}
-
-
-
-
-
-
-
-
-
-
-
-/* Ensure the small image is properly resized */
-.slideshow-container {
-    position: absolute;
-    width: 100%;
-    max-width: 100vw; /* Full width */
-    height: 100vh; /* Match full screen height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.slideshow-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures uniform scaling */
-    position: absolute; /* Keeps it centered */
-    top: 0;
-    left: 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-.image.fit.main {
-    width: 100%;
-    height: auto; /* Adjust height dynamically */
-    display: block; /* Ensures no extra space */
-    object-fit: cover; /* Ensures it covers the area */
-    position: relative;
-}
+}} /* stylelint-disable, leave erro here, makes the slideshow work */
 
 
 
@@ -4267,12 +4219,12 @@ input, select, textarea {
 
 
 
-/* Target specific background images to remove */
-[style*="pic03.jpg"],
-[style*="pic06.jpg"] {
-    background-image: none !important;
-    background: none !important;
-}
+
+
+
+
+
+
 
 
 
@@ -4285,7 +4237,6 @@ input, select, textarea {
     justify-content: center;
     align-items: center;
     overflow: visible; /* Allows button clicks */
-    background-color: black;
 }
 
 
@@ -4316,21 +4267,40 @@ input, select, textarea {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #slideshow-container {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Full height */
-    overflow: hidden; /* Prevents scrolling issues */
+    position: absolute; /* Ensures it’s above other elements */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; /* Full viewport height */
+    z-index: 9999; /* Ensures it's the highest layer */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #slideshow-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image covers the whole section */
-    display: block;
+    max-width: 100%; 
+    max-height: 100vh;
+    object-fit: contain; /* Ensures image scales properly */
 }
 
 
-
-
-
+body {
+    background: transparent !important;
+}
